@@ -34,15 +34,20 @@
 
         function startStreaming(session) {
             if (fCheck) {
-                var streamName = document.getElementById("streamName_f").value;
-                var rtmpUrl = document.getElementById("rtmpUrl_f").value;
+                $('#start-btn').hide(10);
+                console.log("fcheck_start");
+                var streamName_f = document.getElementById("streamName_f").value;
+                var rtmpUrl_f = document.getElementById("rtmpUrl_f").value;
+                console.log(streamName_f);
+                console.log(rtmpUrl_f);
+                
                 session.createStream({
-                    name: streamName,
+                    name: streamName_f,
                     display: localVideo,
                     cacheLocalResources: true,
                     receiveVideo: false,
                     receiveAudio: false,
-                    rtmpUrl: rtmpUrl
+                    rtmpUrl: rtmpUrl_f
                 }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
                     setStatus(STREAM_STATUS.PUBLISHING);
                 }).on(STREAM_STATUS.UNPUBLISHED, function () {
@@ -52,15 +57,19 @@
                 }).publish();
             }
             if (yCheck) {
-                var streamName = document.getElementById("streamName_y").value;
-                var rtmpUrl = document.getElementById("rtmpUrl_y").value;
+                $('#start-btn').hide(10);
+                
+                console.log("fcheck_start");
+                
+                var streamName_y = document.getElementById("streamName_y").value;
+                var rtmpUrl_y = document.getElementById("rtmpUrl_y").value;
                 session.createStream({
-                    name: streamName,
+                    name: streamName_y,
                     display: localVideo,
                     cacheLocalResources: true,
                     receiveVideo: false,
                     receiveAudio: false,
-                    rtmpUrl: rtmpUrl
+                    rtmpUrl: rtmpUrl_y
                 }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
                     setStatus(STREAM_STATUS.PUBLISHING);
                 }).on(STREAM_STATUS.UNPUBLISHED, function () {
@@ -78,24 +87,24 @@
      <script>
         var fCheck = true;
         var yCheck = true;
-        function onYCheck() {
+        function onFCheck() {
             if (fCheck) {
                 fCheck = false;
-                $("#youtube-row").hide(10);
-            }
-            else {
-                fCheck = true;
-                $("#youtube-row").show(10);
-            }
-        }
-        function onFCheck() {
-            if (yCheck) {
-                yCheck = false;
                 $("#facebook-row").hide(10);
             }
             else {
-                yCheck = true;
+                fCheck = true;
                 $("#facebook-row").show(10);
+            }
+        }
+        function onYCheck() {
+            if (yCheck) {
+                yCheck = false;
+                $("#youtube-row").hide(10);
+            }
+            else {
+                yCheck = true;
+                $("#youtube-row").show(10);
             }
         }
     </script>
@@ -172,24 +181,26 @@
 
             <div class="row margin-top-20 text-center" id="youtube-row">
                 <div class="col-md-12">
-                    <span>Stream URL:</span>
-                    <input type="text" id="rtmpUrl_y" value="rtmp://a.rtmp.youtube.com/live2" style="display:inline-block;width: 200px;" />                    Stream name / key:
-                    <input type="text" id="streamName_y" value="x8q5-wzqc-wzz4-dcyz" />
+                    <span>Youtube stream URL:</span>
+                    <input type="text" id="rtmpUrl_y" value="" style="display:inline-block;width: 200px;" />                    
+                    <span>Key:</span>
+                    <input type="text" id="streamName_y" value="" />
                 </div>
             </div>
             <div class="row margin-top-20 text-center" id="facebook-row">
                 <div class="col-md-12">
-                    <span>Stream URL:</span>
-                    <input type="text" id="rtmpUrl_f" value="rtmp://a.rtmp.youtube.com/live2" style="display:inline-block;width: 200px;" />                    Stream name / key:
-                    <input type="text" id="streamName_f" value="x8q5-wzqc-wzz4-dcyz" />
+                    <span>Facebook stream URL:</span>
+                    <input type="text" id="rtmpUrl_f" value="" style="display:inline-block;width: 200px;" /> 
+                    <span>Key:</span>
+                    <input type="text" id="streamName_f" value="" />
                 </div>
             </div>
-            <div class="row margin-top-20">
+            <div class="row margin-top-20" id="start-btn">
                 <div class="col-md-12 text-center">
                     <button class="btn btn-success" onclick="publishToYoutube()">Start</button>
                 </div>
             </div>
-            <p id="status" class="text-center"></p>
+            <p id="status" class="text-center margin-top-20"></p>
     </div>
 </body>
 
