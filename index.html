@@ -5,202 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebStremer</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
     <script src="./js/flashphoner.js"></script>
-    <script type="text/javascript">
-        var SESSION_STATUS = Flashphoner.constants.SESSION_STATUS;
-        var STREAM_STATUS = Flashphoner.constants.STREAM_STATUS;
-        var localVideo;
-
-        function init_page() {
-            Flashphoner.init();
-            localVideo = document.createElement("div");
-        }
-
-        function publishToYoutube() {
-            var urlServer = "wss://webstremer.info:8443";
-            Flashphoner.createSession({ urlServer: urlServer }).on(SESSION_STATUS.ESTABLISHED, function (session) {
-                //session connected, start streaming
-                console.log(session);
-                startStreaming(session);
-            }).on(SESSION_STATUS.DISCONNECTED, function () {
-                setStatus("Connection DISCONNECTED");
-            }).on(SESSION_STATUS.FAILED, function () {
-                setStatus("Connection FAILED");
-            });
-        }
-
-        function startStreaming(session) {
-            if (fCheck) {
-                $('#start-btn').hide(10);
-                console.log("fcheck_start");
-                var streamName_f = document.getElementById("streamName_f").value;
-                var rtmpUrl_f = document.getElementById("rtmpUrl_f").value;
-                console.log(streamName_f);
-                console.log(rtmpUrl_f);
-                
-                session.createStream({
-                    name: streamName_f,
-                    display: localVideo,
-                    cacheLocalResources: true,
-                    receiveVideo: false,
-                    receiveAudio: false,
-                    rtmpUrl: rtmpUrl_f
-                }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
-                    setStatus(STREAM_STATUS.PUBLISHING);
-                }).on(STREAM_STATUS.UNPUBLISHED, function () {
-                    setStatus(STREAM_STATUS.UNPUBLISHED);
-                }).on(STREAM_STATUS.FAILED, function () {
-                    setStatus(STREAM_STATUS.FAILED);
-                }).publish();
-            }
-            if (yCheck) {
-                $('#start-btn').hide(10);
-                
-                console.log("fcheck_start");
-                
-                var streamName_y = document.getElementById("streamName_y").value;
-                var rtmpUrl_y = document.getElementById("rtmpUrl_y").value;
-                session.createStream({
-                    name: streamName_y,
-                    display: localVideo,
-                    cacheLocalResources: true,
-                    receiveVideo: false,
-                    receiveAudio: false,
-                    rtmpUrl: rtmpUrl_y
-                }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
-                    setStatus(STREAM_STATUS.PUBLISHING);
-                }).on(STREAM_STATUS.UNPUBLISHED, function () {
-                    setStatus(STREAM_STATUS.UNPUBLISHED);
-                }).on(STREAM_STATUS.FAILED, function () {
-                    setStatus(STREAM_STATUS.FAILED);
-                }).publish();
-            }
-        }
-
-        function setStatus(status) {
-            document.getElementById("status").innerHTML = status;
-        }
-    </script>
-     <script>
-        var fCheck = true;
-        var yCheck = true;
-        function onFCheck() {
-            if (fCheck) {
-                fCheck = false;
-                $("#facebook-row").hide(10);
-            }
-            else {
-                fCheck = true;
-                $("#facebook-row").show(10);
-            }
-        }
-        function onYCheck() {
-            if (yCheck) {
-                yCheck = false;
-                $("#youtube-row").hide(10);
-            }
-            else {
-                yCheck = true;
-                $("#youtube-row").show(10);
-            }
-        }
-    </script>
-    
-    <title>Web Streamer</title>
+    <script src="./js/script.js"></script>
+    <script src="https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded"></script>
 </head>
 
 <body onload="init_page()">
-    	<script>
-                var vidyoConnector;
-              
-                 // Callback method when VidyoIO is done loading (pointer to this method is passed in the onload parameter while including the
-                 // VidyoClient.js file)
-                  function onVidyoClientLoaded(status) {
-                    console.log("VidyoClient load state - " + status.state);
-                    if (status.state == "READY") {
-                      VC.CreateVidyoConnector({
-                        viewId:"renderer", // Div ID where the composited video will be rendered, see VidyoConnector.html;
-                        viewStyle:"VIDYO_CONNECTORVIEWSTYLE_Default", // Visual style of the composited renderer
-                        remoteParticipants:10, // Maximum number of participants to render
-                        logFileFilter:"error",
-                        logFileName:"",
-                        userData:""
-                      }).then(function (vc) {
-                        console.log("Create success");
-                        vidyoConnector = vc;
-                      }).catch(function(error){
-                        console.error	(error);
-              
-                      });
-                    }
-                  }
-              
-                  function joinCall(){
-                      console.log(vidyoConnector);
-                    // To join a video conference call Connect method
-                    vidyoConnector.Connect({
-                      host:"prod.vidyo.io",  // Server name, for most production apps it will be prod.vidyo.io
-                      token:"cHJvdmlzaW9uAHVzZXIyQDcwMDNjZS52aWR5by5pbwA2MzY3MzQ4MjA2MQAAYjBkYWJjOTNmZTU5Mjc4ZWEzYWRhMWU4ODFhMDdmNTg4NjdkMDQ4NTZkNzExOWU5NmM1MGM3MWQwYjQ1MGVjMTE4NzViYmY2ZjRlYzE1MzdiZmYyZGYyNTBlYjE5NTM2",
-                      displayName:"user2",  // Display name
-                      resourceId:"demoRoom", // Room name
-                      onSuccess: function(){
-                        alert("Connected!! YAY!");
-                      },
-                      onFailure: function(reason){
-                        alert("Connection failed");
-                      },
-                      onDisconnected: function(reason) {
-                        alert(" disconnected - " + 	reason);
-                      }
-                    })
-                  }
-              
-                </script>
-                <script src="https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded"></script>
-    <style>
-        .margin-top-20 {
-            margin-top: 20px;
-        }
-    </style>
     <div class="container">
-        <h1 class="text-center">Hello!</h3>
-            <div id="renderer" style="height:500px;width500px; margin-top:10px"></div>
-            <div class="row text-center">
+        <div class="row">
+            <div id="renderer"></div>
+        </div>
+        <div class="panel panel-default margin-top-20">
+            <div class="row panel-body text-center">
                 <div class="col-md-6">
-                    <input onchange="onYCheck()" checked type="checkbox" name="youtube" id="youtube">
-                    <label for="youtube">Youtube</label>
+                    <button type="button" class="btn btn-primary font-size to-disable" id="streams_number" data-toggle="modal" data-target="#streams-modal">Streams: <span id="streams_count">0</span></button>
                 </div>
-                <div class="col-md-6">
-                    <input onchange="onFCheck()" checked type="checkbox" name="facebook" id="facebook">
-                    <label for="facebook">Facebook</label>
+                <div class="col-md-6 font-size">
+                    <button type="button" onclick="start_publish()" class="btn btn-success font-size to-disable">Start</button>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-20">
+            <ul id="statuses" class="list-group">
+                <li class="list-group-item">Session status: <span id="session_status"></span></li>
+            </ul>
+        </div>
+    </div>
+    <div id="streams-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Streams</h4>
+                </div>
+                <div class="modal-body" id="streams">
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" onclick="removeStream()" class="btn btn-danger">Remove</button>
+
+                    <button type="button" class="btn btn-primary" onclick="addStream()">Add</button>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
 
-            <div class="row margin-top-20 text-center" id="youtube-row">
-                <div class="col-md-12">
-                    <span>Youtube stream URL:</span>
-                    <input type="text" id="rtmpUrl_y" value="" style="display:inline-block;width: 200px;" />                    
-                    <span>Key:</span>
-                    <input type="text" id="streamName_y" value="" />
-                </div>
-            </div>
-            <div class="row margin-top-20 text-center" id="facebook-row">
-                <div class="col-md-12">
-                    <span>Facebook stream URL:</span>
-                    <input type="text" id="rtmpUrl_f" value="" style="display:inline-block;width: 200px;" /> 
-                    <span>Key:</span>
-                    <input type="text" id="streamName_f" value="" />
-                </div>
-            </div>
-            <div class="row margin-top-20" id="start-btn">
-                <div class="col-md-12 text-center">
-                    <button class="btn btn-success" onclick="publishToYoutube()">Start</button>
-                </div>
-            </div>
-            <p id="status" class="text-center margin-top-20"></p>
+        </div>
     </div>
 </body>
 

@@ -1,0 +1,15 @@
+.margin-top-20 {
+    margin-top: 20px;
+}
+#renderer {
+    margin: 0 auto;
+    height: 500px;
+    width: 500px;
+    margin-top: 10px;
+}
+.font-size{
+    font-size: 25px;
+}
+.color-green {
+    color: green;
+}
