@@ -286,7 +286,7 @@
       if (facebookAuthenticated) {
           var streamName_f = document.getElementById("streamName_f").value;
           var rtmpUrl_f = document.getElementById("rtmpUrl_f").value;
-          if(streamName.trim() && rtmpUrl.trim())
+          if(streamName_f.trim() && rtmpUrl_f.trim())
           {
             console.warn(streamName_f + "/" + rtmpUrl_f);
           session.createStream({
@@ -308,7 +308,7 @@
       if (youtubeAuthenticated) {
           var streamName_y = document.getElementById("streamName_y").value;
           var rtmpUrl_y = document.getElementById("rtmpUrl_y").value;
-          if(streamName.trim() && rtmpUrl.trim())
+          if(rtmpUrl_y.trim() && streamName_y.trim())
           {
             console.warn(streamName_y + "/" + rtmpUrl_y);
             
