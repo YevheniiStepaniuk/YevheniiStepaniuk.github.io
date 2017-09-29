@@ -284,17 +284,18 @@
 
   function startStreaming(session) {
       if (facebookAuthenticated) {
-          var streamName = document.getElementById("streamName_f").value;
-          var rtmpUrl = document.getElementById("rtmpUrl_f").value;
+          var streamName_f = document.getElementById("streamName_f").value;
+          var rtmpUrl_f = document.getElementById("rtmpUrl_f").value;
           if(streamName.trim() && rtmpUrl.trim())
           {
+            console.info(streamName_f + "/" + rtmpUrl_f);
           session.createStream({
-              name: streamName,
+              name: streamName_f,
               display: localVideo,
               cacheLocalResources: true,
               receiveVideo: false,
               receiveAudio: false,
-              rtmpUrl: rtmpUrl
+              rtmpUrl: rtmpUrl_f
           }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
               setStatus(STREAM_STATUS.PUBLISHING);
           }).on(STREAM_STATUS.UNPUBLISHED, function () {
@@ -305,17 +306,19 @@
         }
       }
       if (youtubeAuthenticated) {
-          var streamName = document.getElementById("streamName_y").value;
-          var rtmpUrl = document.getElementById("rtmpUrl_y").value;
+          var streamName_y = document.getElementById("streamName_y").value;
+          var rtmpUrl_y = document.getElementById("rtmpUrl_y").value;
           if(streamName.trim() && rtmpUrl.trim())
           {
+            console.info(streamName_y + "/" + rtmpUrl_y);
+            
           session.createStream({
-              name: streamName,
+              name: streamName_y,
               display: localVideo,
               cacheLocalResources: true,
               receiveVideo: false,
               receiveAudio: false,
-              rtmpUrl: rtmpUrl
+              rtmpUrl: rtmpUrl_y
           }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
               setStatus(STREAM_STATUS.PUBLISHING);
           }).on(STREAM_STATUS.UNPUBLISHED, function () {
@@ -327,7 +330,7 @@
       }
   }
   function setStatus(status){
-    console.log(status);
+    console.info(status);
   }
   </script>
 </body>
