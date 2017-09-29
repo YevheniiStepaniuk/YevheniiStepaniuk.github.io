@@ -1,63 +1,332 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="mdl-js">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WebStremer</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/flashphoner.js"></script>
-    <script src="./js/script.js"></script>
-    <script src="https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Publish your Live broadcast to many Social Medias simultaneously!</title>
+  <script src="./flashphoner.js"></script>
+  <!-- Page styles -->
+  <link rel="stylesheet" href="./css.css">
+  <link rel="stylesheet" href="./icon.css">
+  <link rel="stylesheet" href="./material.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+  </style>
 </head>
 
 <body onload="init_page()">
-    <div class="container">
-        <div class="row">
-            <div id="renderer"></div>
+    <script>
+        var vidyoConnector;
+      
+         // Callback method when VidyoIO is done loading (pointer to this method is passed in the onload parameter while including the
+         // VidyoClient.js file)
+          function onVidyoClientLoaded(status) {
+            console.log("VidyoClient load state - " + status.state);
+            if (status.state == "READY") {
+              VC.CreateVidyoConnector({
+                viewId:"localVideo", // Div ID where the composited video will be rendered, see VidyoConnector.html;
+                viewStyle:"VIDYO_CONNECTORVIEWSTYLE_Default", // Visual style of the composited renderer
+                remoteParticipants:10, // Maximum number of participants to render
+                logFileFilter:"error",
+                logFileName:"",
+                userData:""
+              }).then(function (vc) {
+                console.log("Create success");
+                vidyoConnector = vc;
+              }).catch(function(error){
+                console.error	(error);
+      
+              });
+            }
+          }
+        </script>
+         <script src="https://static.vidyo.io/latest/javascript/VidyoClient/VidyoClient.js?onload=onVidyoClientLoaded"></script>
+  <div class="mdl-layout__container">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header is-upgraded" data-upgraded=",MaterialLayout">
+
+      <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+        <div class="mdl-layout__header-row">
+          <span class="android-title mdl-layout-title logo-font" style="font-size:25px;color:#444;">
+
+            <img class="android-logo-image" src="./WebRTC.png" style="vertical-align:bottom;">
+            Publish your Live broadcast to many Social Medias simultaneously!
+          </span>
+          <div class="android-header-spacer mdl-layout-spacer"></div>
+          <span class="android-mobile-title mdl-layout-title">
+           
+          </span>
+
         </div>
-        <div class="panel panel-default margin-top-20">
-            <div class="row panel-body text-center">
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-primary font-size to-disable" id="streams_number" data-toggle="modal" data-target="#streams-modal">Streams: <span id="streams_count">0</span></button>
-                </div>
-                <div class="col-md-6 font-size">
-                    <button type="button" onclick="start_publish()" class="btn btn-success font-size to-disable">Start</button>
-                </div>
+      </div>
+
+      <div class="android-content mdl-layout__content">
+        <a name="top"></a>
+
+        <div class="android-be-together-section mdl-typography--text-center" style="padding-top:20px">
+
+          <div class="mdl-card mdl-shadow--4dp" style="
+    max-width: 640px;
+    width: 80%;
+    margin: auto;
+">
+            <div id="localVideo" style="height: 500px;" width="100%"></div>
+
+            <p>
+              <span class="label label-danger" id="broadcastingInfo" style="display:none">Broadcasting</span>
+            </p>
+            <div>
+              <div class="input-group col-sm-offset-2 col-sm-8">
+                  <label id="f-check"
+                    class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" 
+                    for="facebook-checkbox" 
+                    style="width:inherit;margin-left:36px;" 
+                    data-upgraded=",MaterialCheckbox,MaterialRipple">
+                      <input type="checkbox" id="facebook-checkbox" onchange="facebookChange(this)" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Publish to Facebook</span>
+                      <span class="mdl-checkbox__focus-helper"></span>
+                      <span class="mdl-checkbox__box-outline">
+                        <span class="mdl-checkbox__tick-outline"></span>
+                      </span>
+                      <span class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple">
+                        <span class="mdl-ripple"></span>
+                      </span>
+                    </label>
+                  <label id="y-check"
+                    class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" 
+                    for="youtube-checkbox" 
+                    style="width:inherit;margin-left:36px;" 
+                    data-upgraded=",MaterialCheckbox,MaterialRipple">
+                      <input type="checkbox" id="youtube-checkbox" onchange="youtubeChange(this)" class="mdl-checkbox__input">
+                      <span class="mdl-checkbox__label">Publish to Youtube</span>
+                      <span class="mdl-checkbox__focus-helper"></span>
+                      <span class="mdl-checkbox__box-outline">
+                        <span class="mdl-checkbox__tick-outline"></span>
+                      </span>
+                      <span class="mdl-checkbox__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple">
+                        <span class="mdl-ripple"></span>
+                      </span>
+                    </label>
+                <br>
+                <span>
+        
+          <button onclick="publishToYoutube()" id="start_publishing_button" class="margin-top-20 mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-upgraded=",MaterialButton">Start
+            Publishing</button>
+          </span>
+
+
+              </div>
             </div>
+
+
+
+          </div>
         </div>
-        <div class="row margin-top-20">
-            <ul id="statuses" class="list-group">
-                <li class="list-group-item">Session status: <span id="session_status"></span></li>
-            </ul>
-        </div>
+
+        <footer class="android-footer mdl-mega-footer">
+          <div class="mdl-mega-footer--top-section">
+
+
+          </div>
+
+          <div class="mdl-mega-footer--middle-section">
+            <p class="mdl-typography--font-light">Created at TADhack by Yevhenii Stepaniuk and Ivan Kharlampov, Contacts: <a href="mailto:van4esco@gmail.com">van4esco@gmail.com</a>, <a href="mailto:yevhenii.stepaniuk@gmail.com">yevhenii.stepaniuk@gmail.com</a></p>
+          </div>
+
+
+        </footer>
+      </div>
     </div>
-    <div id="streams-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+  </div>
+  <dialog class="mdl-dialog" id="facebook_dialog">
+    <h4 class="mdl-dialog__title">Facebook data</h4>
+    <div class="mdl-dialog__content">
+      <ol>
+        <li>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="streamName_f">
+                <label class="mdl-textfield__label" for="streamName_f">Facebook url</label>
+              </div>
+        </li>
+        <li>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="rtmpUrl_f">
+                <label class="mdl-textfield__label" for="rtmpUrl_f">Facebook key</label>
+              </div>
+        </li>
+      </ol>
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Streams</h4>
-                </div>
-                <div class="modal-body" id="streams">
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" onclick="removeStream()" class="btn btn-danger">Remove</button>
-
-                    <button type="button" class="btn btn-primary" onclick="addStream()">Add</button>
-
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
     </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button ok" onclick="closeFacebook()">OK</button>
+      <button type="button" class="mdl-button close" onclick="closeFacebook()">Cancel</button>
+    </div>
+  </dialog>
+
+  <dialog class="mdl-dialog" id="youtube_dialog">
+      <h4 class="mdl-dialog__title">Youtube data</h4>
+      <div class="mdl-dialog__content">
+        <ol>
+          <li>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="streamName_f">
+                  <label class="mdl-textfield__label" for="streamName_f">Youtube url</label>
+                </div>
+          </li>
+          <li>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="rtmpUrl_f">
+                  <label class="mdl-textfield__label" for="rtmpUrl_f">Youtube key</label>
+                </div>
+          </li>
+        </ol>
+  
+      </div>
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button ok" onclick="closeYoutube()">OK</button>
+        <button type="button" class="mdl-button close" onclick="closeYoutube()">Cancel</button>
+      </div>
+    </dialog>
+
+  <!-- <script async="" src="./analytics.js.download"></script> -->
+  <script src="./dialog-polyfill.min.js"></script>
+  <script src="./material.min.js"></script>
+  <!-- <script src="./adapter-latest.js.download"></script> -->
+  <script src="./jquery.min.js"></script>
+  <!-- <script src="./websocket_webrtc.js.download"></script> -->
+
+  <script>
+    var facebook_dialog = document.querySelector('#facebook_dialog');
+    var youtube_dialog = document.querySelector('#youtube_dialog');
+    
+    
+    if (!facebook_dialog.showModal || youtube_dialog.showModal) {
+      dialogPolyfill.registerDialog(facebook_dialog);
+      dialogPolyfill.registerDialog(youtube_dialog);
+    }
+    function closeFacebook(){
+      facebook_dialog.close();
+    }
+    function closeYoutube(){
+      youtube_dialog.close();
+    }
+    var facebookAuthenticated = false;
+    var youtubeAuthenticated = false;
+    function facebookChange(el){
+      if(facebookAuthenticated){
+        facebookAuthenticated = false;
+        $('#f-check').removeClass('is-checked');
+      } else {
+        facebook_dialog.showModal();
+        facebookAuthenticated = true;
+        $('#f-check').addClass('is-checked');
+      }
+      $(el).attr("checked", facebookAuthenticated);
+      
+    }
+    function youtubeChange(el){
+      if(youtubeAuthenticated){
+        youtubeAuthenticated = false;
+        $('#y-check').removeClass('is-checked');
+      } else {
+        youtube_dialog.showModal();
+        $('#y-check').addClass('is-checked');
+        youtubeAuthenticated = true;
+      }
+      $(el).attr("checked", youtubeAuthenticated);
+    }
+
+
+    $(function () {
+
+    });
+  </script>
+  <script>
+  var SESSION_STATUS
+  var STREAM_STATUS 
+  var localVideo;
+  function init_page() {
+            Flashphoner.init();
+            localVideo = document.createElement("div");
+            SESSION_STATUS = Flashphoner.constants.SESSION_STATUS;
+  var STREAM_STATUS = Flashphoner.constants.STREAM_STATUS;
+  }
+  function publishToYoutube() {
+    if(!facebookAuthenticated && !youtubeAuthenticated)
+      return;
+          $('#start_publishing_button').attr('disabled','disabled');
+          var urlServer = "wss://wcs5-eu.flashphoner.com:8443";
+          Flashphoner.createSession({ urlServer: urlServer }).on(SESSION_STATUS.ESTABLISHED, function (session) {
+              //session connected, start streaming
+              console.log(session);
+              startStreaming(session);
+          }).on(SESSION_STATUS.DISCONNECTED, function () {
+              setStatus("Connection DISCONNECTED");
+          }).on(SESSION_STATUS.FAILED, function () {
+              setStatus("Connection FAILED");
+          });
+  }
+
+  function startStreaming(session) {
+      if (facebookAuthenticated) {
+          var streamName = document.getElementById("streamName_f").value;
+          var rtmpUrl = document.getElementById("rtmpUrl_f").value;
+          if(streamName.trim() && rtmpUrl.trim())
+          {
+          session.createStream({
+              name: streamName,
+              display: localVideo,
+              cacheLocalResources: true,
+              receiveVideo: false,
+              receiveAudio: false,
+              rtmpUrl: rtmpUrl
+          }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
+              setStatus(STREAM_STATUS.PUBLISHING);
+          }).on(STREAM_STATUS.UNPUBLISHED, function () {
+              setStatus(STREAM_STATUS.UNPUBLISHED);
+          }).on(STREAM_STATUS.FAILED, function () {
+              setStatus(STREAM_STATUS.FAILED);
+          }).publish();
+        }
+      }
+      if (youtubeAuthenticated) {
+          var streamName = document.getElementById("streamName_y").value;
+          var rtmpUrl = document.getElementById("rtmpUrl_y").value;
+          if(streamName.trim() && rtmpUrl.trim())
+          {
+          session.createStream({
+              name: streamName,
+              display: localVideo,
+              cacheLocalResources: true,
+              receiveVideo: false,
+              receiveAudio: false,
+              rtmpUrl: rtmpUrl
+          }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
+              setStatus(STREAM_STATUS.PUBLISHING);
+          }).on(STREAM_STATUS.UNPUBLISHED, function () {
+              setStatus(STREAM_STATUS.UNPUBLISHED);
+          }).on(STREAM_STATUS.FAILED, function () {
+              setStatus(STREAM_STATUS.FAILED);
+          }).publish();
+        }
+      }
+  }
+  function setStatus(status){
+    console.log(status);
+  }
+  </script>
 </body>
 
 </html>
