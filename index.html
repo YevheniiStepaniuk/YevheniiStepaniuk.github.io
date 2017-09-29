@@ -181,14 +181,14 @@
         <ol>
           <li>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="streamName_f">
-                  <label class="mdl-textfield__label" for="streamName_f">Youtube url</label>
+                  <input class="mdl-textfield__input" type="text" id="streamName_y">
+                  <label class="mdl-textfield__label" for="streamName_y">Youtube url</label>
                 </div>
           </li>
           <li>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="rtmpUrl_f">
-                  <label class="mdl-textfield__label" for="rtmpUrl_f">Youtube key</label>
+                  <input class="mdl-textfield__input" type="text" id="rtmpUrl_y">
+                  <label class="mdl-textfield__label" for="rtmpUrl_y">Youtube key</label>
                 </div>
           </li>
         </ol>
@@ -258,15 +258,18 @@
   var STREAM_STATUS 
   var localVideo;
   function init_page() {
-            Flashphoner.init();
-            localVideo = document.createElement("div");
-            SESSION_STATUS = Flashphoner.constants.SESSION_STATUS;
-  var STREAM_STATUS = Flashphoner.constants.STREAM_STATUS;
+    Flashphoner.init();
+    localVideo = document.createElement("div");
+    SESSION_STATUS = Flashphoner.constants.SESSION_STATUS;
+    STREAM_STATUS = Flashphoner.constants.STREAM_STATUS;
   }
   function publishToYoutube() {
     if(!facebookAuthenticated && !youtubeAuthenticated)
       return;
           $('#start_publishing_button').attr('disabled','disabled');
+          $('input[type=checkbox]').attr('disabled','disabled');
+          $('#y-check').addClass('is-disabled');
+          $('#f-check').addClass('is-disabled');
           var urlServer = "wss://wcs5-eu.flashphoner.com:8443";
           Flashphoner.createSession({ urlServer: urlServer }).on(SESSION_STATUS.ESTABLISHED, function (session) {
               //session connected, start streaming
