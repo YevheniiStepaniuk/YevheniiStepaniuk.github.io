@@ -288,7 +288,7 @@
           var rtmpUrl_f = document.getElementById("rtmpUrl_f").value;
           if(streamName.trim() && rtmpUrl.trim())
           {
-            console.info(streamName_f + "/" + rtmpUrl_f);
+            console.warn(streamName_f + "/" + rtmpUrl_f);
           session.createStream({
               name: streamName_f,
               display: localVideo,
@@ -310,7 +310,7 @@
           var rtmpUrl_y = document.getElementById("rtmpUrl_y").value;
           if(streamName.trim() && rtmpUrl.trim())
           {
-            console.info(streamName_y + "/" + rtmpUrl_y);
+            console.warn(streamName_y + "/" + rtmpUrl_y);
             
           session.createStream({
               name: streamName_y,
@@ -330,7 +330,7 @@
       }
   }
   function setStatus(status){
-    console.info(status);
+    console.warn(status);
   }
   </script>
 </body>
