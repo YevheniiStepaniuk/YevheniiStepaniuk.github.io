@@ -122,7 +122,7 @@
                 <br>
                 <span>
         
-          <button onclick="publishToYoutube()" id="start_publishing_button" class="margin-top-20 mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-upgraded=",MaterialButton">Start
+          <button id="start_publishing_button" class="margin-top-20 mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-upgraded=",MaterialButton">Start
             Publishing</button>
           </span>
 
@@ -135,7 +135,7 @@
           </div>
         </div>
 
-        <footer class="android-footer mdl-mega-footer">
+        <footer class="android-footer mdl-mega-footer margin-top-20">
           <div class="mdl-mega-footer--top-section">
 
 
@@ -262,15 +262,36 @@
     localVideo = document.createElement("div");
     SESSION_STATUS = Flashphoner.constants.SESSION_STATUS;
     STREAM_STATUS = Flashphoner.constants.STREAM_STATUS;
+	onStopped();
   }
+function onStarted(previewStream) {
+    $("#start_publishing_button").text("Stop Publish").off('click').click(function(){
+        $(this).prop('disabled', true);
+        previewStream.stop();
+    }).prop('disabled', false);
+  $('input[type=checkbox]').removeAttr('disabled');
+  $('#y-check').removeClass('is-disabled');
+  $('#f-check').removeClass('is-disabled');
+}
+
+function onStopped() {
+    $("#start_publishing_button").text("Start Publish").off('click').click(function(){
+	    if(!facebookAuthenticated && !youtubeAuthenticated)
+      return;
+		$(this).prop('disabled', true);
+		publishToYoutube();
+    }).prop('disabled', false);
+}
   function publishToYoutube() {
     if(!facebookAuthenticated && !youtubeAuthenticated)
       return;
-          $('#start_publishing_button').attr('disabled','disabled');
           $('input[type=checkbox]').attr('disabled','disabled');
           $('#y-check').addClass('is-disabled');
           $('#f-check').addClass('is-disabled');
           var urlServer = "wss://webstremer.info:8443";
+		  if (Flashphoner.getSessions().length > 0) {
+        startStreaming(Flashphoner.getSessions()[0]);
+    } else {
           Flashphoner.createSession({ urlServer: urlServer }).on(SESSION_STATUS.ESTABLISHED, function (session) {
               //session connected, start streaming
               console.log(session);
@@ -280,6 +301,7 @@
           }).on(SESSION_STATUS.FAILED, function () {
               setStatus("Connection FAILED");
           });
+		  }
   }
 
   function startStreaming(session) {
@@ -297,10 +319,13 @@
               receiveAudio: false,
               rtmpUrl: rtmpUrl_f
           }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
+		  onStarted(publishStream);
               setStatus(STREAM_STATUS.PUBLISHING);
           }).on(STREAM_STATUS.UNPUBLISHED, function () {
+		  onStopped();
               setStatus(STREAM_STATUS.UNPUBLISHED);
           }).on(STREAM_STATUS.FAILED, function () {
+		  onStopped();
               setStatus(STREAM_STATUS.FAILED);
           }).publish();
         }
@@ -320,10 +345,13 @@
               receiveAudio: false,
               rtmpUrl: rtmpUrl_y
           }).on(STREAM_STATUS.PUBLISHING, function (publishStream) {
+		  onStarted(publishStream);
               setStatus(STREAM_STATUS.PUBLISHING);
           }).on(STREAM_STATUS.UNPUBLISHED, function () {
+		   onStopped();
               setStatus(STREAM_STATUS.UNPUBLISHED);
           }).on(STREAM_STATUS.FAILED, function () {
+		   onStopped();
               setStatus(STREAM_STATUS.FAILED);
           }).publish();
         }
