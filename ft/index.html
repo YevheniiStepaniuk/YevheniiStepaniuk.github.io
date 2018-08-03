@@ -9,15 +9,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <title>FT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
-
+  <link rel="stylesheet" href="./style.css" />
 </head>
 	<body>
-		<h1 class="uk-heading-bullet">FT</h1>
+      <div uk-sticky class="uk-navbar-container tm-navbar-container uk-active">
+          <div class="uk-container uk-container-expand">
+              <nav uk-navbar>
+                  <div class="uk-navbar-left">
+                      <a id="sidebar_toggle" class="uk-navbar-toggle" uk-navbar-toggle-icon ></a>
+                      <a href="#" class="uk-navbar-item uk-logo">
+                          FT
+                      </a>
+                  </div>
+              </nav>
+          </div>
+      </div>
+
+    <div id="sidebar" class="ft-sidebar-left uk-background-default">
+    
+    </div>
+		<div class="content-padder content-background">
+      
+    </div>
 		
 		
-		
-		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
+	<script src="./script.js"></script>
 	</body>
 </html>
