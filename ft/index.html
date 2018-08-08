@@ -2,41 +2,120 @@
 <html lang="en" class="mdl-js">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="FT">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <title>FT</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
-  <link rel="stylesheet" href="./style.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="FT">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>FT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
+    <link rel="stylesheet" href="./style.css" />
 </head>
-	<body>
-      <div uk-sticky class="uk-navbar-container tm-navbar-container uk-active">
-          <div class="uk-container uk-container-expand">
-              <nav uk-navbar>
-                  <div class="uk-navbar-left">
-                      <a id="sidebar_toggle" class="uk-navbar-toggle" uk-navbar-toggle-icon ></a>
-                      <a href="#" class="uk-navbar-item uk-logo">
-                          FT
-                      </a>
-                  </div>
-              </nav>
-          </div>
-      </div>
+
+<body>
+    <div uk-sticky class="uk-navbar-container tm-navbar-container uk-active">
+        <div class="uk-container uk-container-expand">
+            <nav uk-navbar>
+                <div class="uk-navbar-left ft-nabar">
+                    <a id="sidebar_toggle" class="uk-navbar-toggle" uk-navbar-toggle-icon></a>
+                    <a href="#" class="uk-navbar-item uk-logo">
+                        FT
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
 
     <div id="sidebar" class="ft-sidebar-left uk-background-default">
-    
+        <div class="uk-margin">
+            <form>
+                <select class="uk-select">
+                    <option>All groups</option>
+                    <option>Guys</option>
+                    <option>Universe</option>
+                    <option>Geka</option>
+                </select>
+            </form>
+        </div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-header">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-card-badge uk-label">555</div>
+                    <div class="uk-width-auto">
+                        <img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg">
+                    </div>
+                    <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Title</h3>
+                        <p class="uk-text-meta uk-margin-remove-top">
+                            <time datetime="2016-04-01T19:00">April 01, 2016</time>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-header">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-card-badge uk-label uk-background-default">555</div>
+                    <div class="uk-width-auto">
+                        <img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg">
+                    </div>
+                    <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Title</h3>
+                        <p class="uk-text-meta uk-margin-remove-top">
+                            <time datetime="2016-04-01T19:00">April 01, 2016</time>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-header">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-card-badge uk-label uk-background-secondary">555</div>
+                    <div class="uk-width-auto">
+                        <img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg">
+                    </div>
+                    <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Title</h3>
+                        <p class="uk-text-meta uk-margin-remove-top">
+                            <time datetime="2016-04-01T19:00">April 01, 2016</time>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-		<div class="content-padder content-background">
-      
+    <div class="content-padder content-background">
+        <div>
+            <ul class="uk-child-width-expand" uk-tab>
+                <li class="uk-active">
+                    <a href="#">Justify</a>
+                </li>
+                <li>
+                    <a href="#">Item</a>
+                </li>
+                <li>
+                    <a href="#">Item</a>
+                </li>
+                <li>
+                    <a href="#">Item</a>
+                </li>
+            </ul>
+        </div>
     </div>
-		
-		
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js" integrity="sha256-rqEXy4JTnKZom8mLVQpvni3QHbynfjPmPxQVsPZgmJY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
-	<script src="./script.js"></script>
-	</body>
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js" integrity="sha256-rqEXy4JTnKZom8mLVQpvni3QHbynfjPmPxQVsPZgmJY="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+
 </html>
