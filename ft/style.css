@@ -5,7 +5,6 @@
     bottom: 0;
     box-sizing: border-box;
     width: 240px !important;
-    padding: 40px 40px 60px 40px;
     border-right: 1px #e5e5e5 solid;
     overflow-y: auto;
 	overflow-x: hidden;
@@ -54,7 +53,6 @@
 @media (min-width: 1400px) {
     .ft-sidebar-left {
         width: 300px !important;
-        padding: 45px 45px 60px 45px
     }
     .ft-sidebar-right {
         left: calc(100% + 60px)
@@ -85,4 +83,8 @@
 ::moz-selection {
  background-color: #d1eefe;
  color: #1e87f0;
+}
+
+.uk-card-header {
+    padding-left: 10px;
 }
